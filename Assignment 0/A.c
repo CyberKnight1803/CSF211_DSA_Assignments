@@ -23,7 +23,7 @@ int main(){
 
 
     for(i = 0; i < n1_len; ++i){
-        char n1_d = (i < n1_len)?(n1[n1_len - i - 1] - 48):0;
+        char n1_d = n1[n1_len - i - 1] - 48;
         char n2_d = (i < n2_len)?(n2[n2_len - i - 1] - 48):0;
 
         S = n1_d + n2_d + C;
