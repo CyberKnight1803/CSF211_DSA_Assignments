@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-#define N 1000
+#define N 1001
 
 int main(){
     char n1[N], n2[N], ans[N];
