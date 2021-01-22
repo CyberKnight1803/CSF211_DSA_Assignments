@@ -37,7 +37,7 @@ void rec(int n, char *s){
         }
     }
     else{
-        printf("NO");
+        if(e) printf("NO");
     }
 }
 
