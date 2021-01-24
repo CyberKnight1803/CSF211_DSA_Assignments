@@ -1,41 +1,38 @@
 #include<stdio.h>
+#include<stdlib.h>
 
-void sort(int n, long *arr){
-    for(int i = 0; i < n - 1; ++i){
-        for(int j = 0; j < n - i - 1; ++j){
-            if(arr[j] > arr[j + 1]){
-                int t = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = t;
-            }
-        }
+void generateBitString(int m, int n,  int *p, int *bitString){
+    for(int i = 0; i < n; ++i){
+        bitString[p[i]] = 1; 
     }
 }
 
-int maxPurchase(int n, long *items, long money){
-    sort(n, items);
-    int c = 0;
-    for(int i = 0; i < n; ++i){
-        money -= items[i];
-        if(money >= 0){
-            c++;
+int maxProducts(int m, int *bitString){
+    int money = m, products = 0;
+    for(int i = 0; i <= m; ++i){
+        if(bitString[i] == 1){
+            money -= i;
+            if(money > 0){
+                ++products;
+            }
         }
-        else{
+        if(money < 0){
             break;
         }
     }
-    return c;
+    return products;
 }
 
 int main(){
-    long money; scanf("%ld", &money);
+    int m; scanf("%d", &m);
     int n; scanf("%d", &n);
-    long items[25];
+    int *p = (int *)malloc(sizeof(int) * n);
+    int *bitString = (int *)malloc(sizeof(int) * (m + 1));
 
-
-    for(int i = 0; i < n; ++i){
-        scanf("%ld", &items[i]);
+    for(int i = 0; i < n;  ++i){
+        scanf("%d", &p[i]);
     }
-    
-    printf("%d", maxPurchase(n, items, money));
+
+    generateBitString(m, n, p, bitString);
+    printf("%d", maxProducts(m, bitString));
 }
