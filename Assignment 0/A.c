@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<string.h>
 #define N 1001
 
 int main(){
