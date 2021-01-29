@@ -1,13 +1,13 @@
 #include<stdio.h>
-
+#include<string.h>
 #define N 1001
 
 int main(){
     char n1[N], n2[N], ans[N];
-    int n1_len, n2_len, ans_len; 
+    int n1_len = 0, n2_len = 0, ans_len = 0; 
     int i = 0, S = 0, C = 0;
 
-    scanf("%s", n1); scanf("%s", n2);
+    scanf("%s\n%s", n1, n2);
     
     /* 
     assuming 2nd number to be smaller than first 
@@ -34,10 +34,16 @@ int main(){
         }
         ans[i] = S + 48;
     }
-    if(C) 
+    if(C){
         ans[i++] = C + 48;
-    
+        ans[i + 1] = '\0';
+    }
+    else{
+        ans[i] = '\0';
+    }
+
     ans_len = i;
+    
     for(i = 0; i < ans_len/ 2; ++i){
         char t = ans[i];
         ans[i] = ans[ans_len - i - 1];
