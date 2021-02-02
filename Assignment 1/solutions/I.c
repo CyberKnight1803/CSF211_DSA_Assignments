@@ -20,9 +20,12 @@ void createList(struct node *list){
 }
 
 void printList(struct node *list){
-    if(list != NULL){
+    if(list->next != NULL && list->data != -1){
         printf("%d ", list->data);
         printList(list->next);
+    }
+    else if(list->data != -1){
+        printf("%d", list->data);
     }
 }
 

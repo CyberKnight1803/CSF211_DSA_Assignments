@@ -27,10 +27,8 @@ int minMax(int n, int *arr){
     min = difference(n, arr);
     max = min;
     
-    for(int i = 0; i < n; ++i){
-        for(int j = 0; j < i; ++j){
-            rotate(n, arr);
-        }
+    for(int i = 1; i < n; ++i){
+        rotate(n, arr);
         cost = difference(n, arr);
         if(max < cost) max = cost;
         if(min > cost) min = cost;

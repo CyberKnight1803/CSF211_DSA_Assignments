@@ -1,12 +1,13 @@
 #include<stdio.h>
-#define N 1001
+#define N 1000
 
 int main(){
     char n1[N], n2[N], ans[N];
     int n1_len = 0, n2_len = 0, ans_len = 0; 
     int i = 0, S = 0, C = 0;
 
-    scanf("%s\n%s", n1, n2);
+    scanf("%s", n1);
+    scanf("%s", n2);
     
     /* 
     assuming 2nd number to be smaller than first 
