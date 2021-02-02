@@ -7,52 +7,45 @@ struct node{
     char data;
 };
 
-void createNode(struct node **list, char data){
-    struct node *t = *list;
-    struct node *newNode = (struct node *)malloc(sizeof(struct node));
-    newNode->data = data;
-    newNode->next = NULL;
-    if(*list == NULL){
-        newNode->prev = NULL;
-        *list = newNode;
-        return;
-    }
-    
-    while(t->next != NULL){
-        t = t->next;
-    }
+void createNode(struct node** list, char new_data) 
+{ 
+    struct node* new_node =  (struct node *)malloc(sizeof(struct node)); 
+    new_node->data  = new_data; 
+    new_node->next = *list; 
+    new_node->prev = NULL; 
+    if (*list !=  NULL) 
+      (*list)->prev = new_node ; 
+    *list = new_node; 
+} 
+int isPalindrome(struct node *leftNode) 
+{ 
+    if (leftNode == NULL) 
+       return 1; 
 
-    newNode->prev = t;
-    return;
-}
-
-int isPalindrome(struct node *leftMostNode){
-    if(leftMostNode == NULL){
-        return 1;
-    }
-
-    struct node *rightMostNode = leftMostNode;
-    while(rightMostNode->next != NULL){
-        rightMostNode = rightMostNode->next;
-    }
-
-    while(leftMostNode != rightMostNode){
-        if(leftMostNode->data != rightMostNode->data) return 0;
-
-        leftMostNode = leftMostNode->next;
-        rightMostNode = rightMostNode->prev;
-    }
-    return 1;
-}
+    struct node *rightNode = leftNode; 
+    while (rightNode->next != NULL) 
+        rightNode = rightNode->next; 
+  
+    while (leftNode != rightNode) 
+    { 
+        if (leftNode->data != rightNode->data) 
+            return 0; 
+  
+        leftNode = leftNode->next; 
+        rightNode = rightNode->prev; 
+    } 
+    return 1; 
+} 
 
 int main(){
     int n; scanf("%d", &n);
-    char c;
+    char *c = (char *)malloc(sizeof(char) * (n + 1));
     struct node *list = NULL;
-
-    for(int i = 0; i < n; ++i){
-        scanf("%c", &c);
-        createNode(&list, c);
+    scanf("%s", c);
+    int i = 0;
+    while(n--){
+        createNode(&list, c[i]);
+        i++;
     }
 
     isPalindrome(list) ? printf("PALINDROME") : printf("NOT A PALINDROME");
