@@ -3,7 +3,7 @@
 
 void generateBitString(int m, int n,  int *p, int *bitString){
     for(int i = 0; i < n; ++i){
-        bitString[p[i]] += 1;  // freq
+        bitString[p[i]] += 1;  // freq instead of 1
     }
 }
 

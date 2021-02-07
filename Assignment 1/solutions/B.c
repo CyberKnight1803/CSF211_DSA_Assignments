@@ -16,7 +16,8 @@ void createNode(struct node** list, char new_data)
     if (*list !=  NULL) 
       (*list)->prev = new_node ; 
     *list = new_node; 
-} 
+}
+ 
 int isPalindrome(struct node *leftNode) 
 { 
     if (leftNode == NULL) 
