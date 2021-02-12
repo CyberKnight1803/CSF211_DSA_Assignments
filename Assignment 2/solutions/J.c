@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
 typedef struct{
     int *queue;
     int front;
@@ -107,7 +108,6 @@ void BFS(Graph *G, int source, int final){
         }
     }
 }
-
 
 int main(){
     int V, E, source, destination;
