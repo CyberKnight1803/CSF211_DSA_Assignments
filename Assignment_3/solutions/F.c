@@ -87,7 +87,15 @@ void addEdge(Graph *G, int u, int v){
     G->adjList[v] = newNode;
 }
 
-void BFS(Graph *G, int source){
+int visitedNodesCount(Graph *G){
+    int visited = 0;
+    for(int i = 0; i < G->V; ++i){
+        visited += G->isVisited[i];
+    }
+    return visited;
+}
+
+int BFS(Graph *G, int source){
     Queue *Q = createQueue(G->V);
     G->isVisited[source] = 1;
     enqueue(Q, source);
@@ -98,18 +106,13 @@ void BFS(Graph *G, int source){
         for(Node *T = G->adjList[v]; T != NULL; T = T->next){
             if(G->isVisited[T->vertex] == 0){
                 G->isVisited[T->vertex] = 1;
+                if(visitedNodesCount(G) >= 0.8 * G->V)
+                    return 0;
                 enqueue(Q, T->vertex);
             }
         }
     }
-}
-
-int visitedNodesCount(Graph *G){
-    int visited = 0;
-    for(int i = 0; i < G->V; ++i){
-        visited += G->isVisited[i];
-    }
-    return visited;
+    return 1;
 }
 
 int main(){
@@ -126,8 +129,8 @@ int main(){
     int minVaccines = 0;
     for(int i = 0; i < N; ++i){
         if(G->isVisited[i] == 0 && (double)visitedNodesCount(G) < 0.8 * N){
-            BFS(G, i);
-            minVaccines++;
+            if(BFS(G, i))
+                minVaccines++;
         }
     }
 
