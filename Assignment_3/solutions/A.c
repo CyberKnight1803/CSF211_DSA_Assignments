@@ -32,16 +32,19 @@ int maxIceCreams(int *S, int *A, int n, int m, int k){
     qSort(S, 0, m - 1);
     qSort(A, 0, n - 1);
 
-
     int max = 0, i = 0, j = 0;
-    
-    for(int i = 0, j = 0; i < m - 1; ++i){
-        if(A[j] - k <= S[i] && S[i] <= A[j] + k){
+
+    while(i < n && j < m){
+        if(A[i] - k <= S[j] && S[j] <= A[i] + k){
+            i++;
+            j++;
             max++;
+        }
+        else if (A[i] - S[j] > 0){
             j++;
         }
-        else if(S[i + 1] - A[j] > k){
-            j++;
+        else if (A[i] - S[j] < 0){
+            i++;
         }
     }
     return max;
