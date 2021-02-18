@@ -128,7 +128,7 @@ int main(){
 
     int minVaccines = 0;
     for(int i = 0; i < N; ++i){
-        if(G->isVisited[i] == 0 && (double)visitedNodesCount(G) < 0.8 * N){
+        if(G->isVisited[i] == 0){
             if(BFS(G, i))
                 minVaccines++;
         }
