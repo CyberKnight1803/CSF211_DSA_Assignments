@@ -64,6 +64,7 @@ ll maxChocolates(ll *heap, int *heapSize, int d){
         sum = (sum + max) % mod;
         insertMaxHeap(heap, heapSize, max / 3);
     }
+    
     return sum;
 }
 
