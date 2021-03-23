@@ -1,2 +1,12 @@
+
+MAC OS
 **/.DS_Store
+
+Debugging & VS Code
+**/i.dSYM
+.vscode
+
+Executable files - 
 a.out
+
+
