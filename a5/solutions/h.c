@@ -1,5 +1,7 @@
 #include<stdio.h>
+
 #define ll long long 
+#define N (int) 1e5
 
 void swap(ll *a, ll *b){
     ll t = *a;
@@ -99,7 +101,65 @@ ll extractMax(ll *a, int *n){
     return key;
 }
 
+ll getRoot(ll heap[], int size){
+    if(size <= 0)
+        return -1;
+    return heap[0];
+}
+
+ll getMedian(ll a, ll *median, int lHeap[], int *lSize, int rHeap[], int *rSize){
+    if(lSize > rSize){
+        if(a < *median){
+            ll t = extractMax(lHeap, lSize);
+            insertMinHeap(rHeap, rSize, t);
+            insertMaxHeap(lHeap, lSize, a);
+        }
+        else
+            insertMinHeap(rHeap, rSize, a);
+        
+        *median = (getRoot(lHeap, lSize) + getRoot(rHeap, rSize)) / 2;
+    }
+    
+    else if (lSize == rSize) {
+        if (a < *median) {
+            insertMaxHeap(lHeap, lSize, a);
+            *median = getRoot(lHeap, lSize);
+
+        } else {
+            insertMinHeap(rHeap, rSize, a);
+            *median = getRoot(rHeap, rSize);
+        }
+    }
+
+    else {
+        if (a < *median) {
+            insertMaxHeap(lHeap, lSize, a);
+        }
+        else {
+            ll t = extractMin(rHeap, rSize);
+            insertMaxHeap(lHeap, lSize, t);
+            insertMinHeap(rHeap, rSize, a);
+        }
+
+        *median = (getTop(lHeap, lSize) + getTop(rHeap, rSize)) / 2;
+    }
+
+    return *median;
+}
+
 
 int main(){
- // Need to work on this
+    int n;
+    scanf("%d", &n);
+
+    ll lHeap[N], rHeap[N];
+    int lSize = 0, rSize = 0;
+
+    int a, effMedian = 0;
+
+    for(int i = 0; i < n; ++i){
+        scanf("%lld", &a);
+        getMedian(a, &effMedian, lHeap, lSize, rHeap, rSize);
+        printf("%lld ", effMedian);
+    }
 }

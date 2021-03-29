@@ -12,7 +12,7 @@ ll getWatermelons(ll t, ll T[], int n){
 
 ll binarySearch(ll T[], int n, ll l, ll r, ll k){
     
-    while(l < r){
+    while(l <= r){
         int m = (l + r) / 2;
 
         if(k == getWatermelons(m, T, n))
@@ -24,23 +24,22 @@ ll binarySearch(ll T[], int n, ll l, ll r, ll k){
         else
             l = m + 1;
     }
-    return l;
 }
 
 int main(){
     int n, k;
     scanf("%d %d", &n, &k);
     
-    ll T[n], min = INT64_MAX;
+    ll T[n], max = INT64_MIN;
 
     for(int i = 0; i < n; ++i){
         scanf("%lld", &T[i]);
 
-        if(T[i] < min)
-            min = T[i];
+        if(T[i] > max)
+            max = T[i];
     }
-    int maxTime = min * k;
+    ll maxTime = max * k;
 
-    int minTime = binarySearch(T, n, 1, maxTime, k);
-    printf("%d", minTime);
+    ll minTime = binarySearch(T, n, 0, maxTime, k);
+    printf("%lld", minTime);
 }
