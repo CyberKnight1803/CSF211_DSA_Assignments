@@ -1,11 +1,15 @@
 # Used to initialize assignments
-
+import os
 
 # Initialize variables
-assignment = 8 # Assignment number
+assignment = 10 # Assignment number
+dir = 'a' + str(assignment)
+os.makedirs(dir)
+solutions = dir + '/solutions/'
+os.makedirs(solutions)
+
 questions = 'abcdefghij'
-path = 'a' + str(assignment) + '/solutions/' 
 
 for q in questions:
-    open(path + q + '.c', 'a').close()
+    open(solutions + q + '.c', 'a').close()
 
