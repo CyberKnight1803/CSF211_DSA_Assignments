@@ -1,12 +1,13 @@
 
-MAC OS
+# MAC OS
 **/.DS_Store
 
-Debugging & VS Code
+# Debugging & VS Code
 **/i.dSYM
 .vscode
 
-Executable files - 
+# Executable files - 
 a.out
 
-
+# Temporary bases -
+snippets/
