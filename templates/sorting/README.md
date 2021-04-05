@@ -1,3 +1,3 @@
 # Implementatin of Different Sorting Algorithms
 
-$`\mathcal{O}`$
+$O(n^2) Algorithms$
