@@ -4,12 +4,16 @@ AY 2021 Sem 2
 • Try to use functions as much as possible in your code. Functions increase reusability and
 the pass-by-value feature provides a significant help sometimes. Modularizing your code also
 helps you to debug efficiently.
+
 • Use scanf to read characters/strings from STDIN. Avoid using getchar, getc or gets. Try
 to read up about character suppression in scanf as it will be very helpful in some of the
 problems.
+
 • Use printf instead of putc, putchar or puts to print character/string output on STDOUT.
+
 • Indent your code appropriately and use proper variable names. These increase readability
 and writability of the code. Also, use comments wherever necessary.
+
 • Use a proper IDEs like Sublime Text or VSCode as they help to run and test your code on
 multiple test-cases easily. You can install Windows Subsystem Linux (WSL) or MinGW 7.3.0,
 if you are Windows user to compile and run your programs. Alternatively, you can run and
