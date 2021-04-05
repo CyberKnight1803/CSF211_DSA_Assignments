@@ -2,7 +2,7 @@
 import os
 
 # Initialize variables
-assignment = 10 # Assignment number
+assignment = 9 # Assignment number
 dir = 'a' + str(assignment)
 os.makedirs(dir)
 solutions = dir + '/solutions/'
