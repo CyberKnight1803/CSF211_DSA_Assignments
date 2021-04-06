@@ -41,7 +41,32 @@ void addEdge(Graph *G, int u, int v){
     G->adjList[v] = newNode;
 }
 
+void DFS(Graph *G, int src){
+    int vStack[G->V], top = -1;
+    int *isVisited = (int *)calloc(G->V, sizeof(int));
+    isVisited[src] = 1;
+    vStack[++top] = src;
+
+    while(top != -1){
+        int u = vStack[top--];
+        printf("%d ", u);
+        for(Node *t = G->adjList[u]; t != NULL; t = t->next){
+            if(isVisited[t->vertex] == 0){
+                isVisited[t->vertex] = 1;
+                vStack[++top] = t->vertex;
+            }
+        }
+    }
+}
+
 int main(){
-    int V, E;
-    scanf("%d %d", &V, &E);
+    int v, e, src;
+    scanf("%d %d %d", &v, &e, &src);
+    Graph *g = createGraph(v, e);
+    for(int i = 0; i < g->E; ++i){
+        int u, v;
+        scanf("%d %d", &u, &v);
+        addEdge(g, u, v);
+    }
+    DFS(g, src);
 }
