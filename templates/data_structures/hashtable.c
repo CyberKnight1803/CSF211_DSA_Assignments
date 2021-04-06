@@ -15,7 +15,7 @@ typedef struct HashTable{
     HashNode *slots[HASHSIZE];
 }HashTable;
 
-HashTable *init(){
+HashTable *initHashTable(){
     HashTable *hashtable = (HashTable *)malloc(sizeof(HashTable));
     for(int i = 0; i < HASHSIZE; ++i){
         hashtable->slots[i] = NULL;
@@ -48,10 +48,14 @@ ll get(HashTable *hashtable, ll key){
     ll slot = hash(key);
     HashNode *node = hashtable->slots[slot];
 
-    while(node != NULL && node->key == key){
+    while(node != NULL && node->key != key){
         node = node->next;
     }
     if(node = NULL)
         return -1;
     return node->data;
+}
+
+int main(){
+    
 }
