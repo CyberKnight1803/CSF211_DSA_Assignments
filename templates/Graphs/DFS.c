@@ -59,6 +59,16 @@ void DFS(Graph *G, int src){
     }
 }
 
+void recDFS(Graph *G, int v, int isVisited[]){
+    isVisited[v] = 1;
+    printf("%d ", v);
+
+    for(Node *t = G->adjList[v]; t != NULL; t = t->next){
+        if(isVisited[t->vertex] == 0)
+            recDFS(G, t->vertex, isVisited);
+    }
+}
+
 int main(){
     int v, e, src;
     scanf("%d %d %d", &v, &e, &src);
@@ -68,5 +78,9 @@ int main(){
         scanf("%d %d", &u, &v);
         addEdge(g, u, v);
     }
+
+    int *isVisited = (int *)calloc(g->V, sizeof(int));
     DFS(g, src);
+    printf("\n");
+    recDFS(g, src, isVisited);
 }
