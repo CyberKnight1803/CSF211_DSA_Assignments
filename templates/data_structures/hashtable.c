@@ -35,7 +35,7 @@ void insert(HashTable *hashtable, ll key, ll data){
 
     ll slot = hash(key);
     HashNode *slot_node = hashtable->slots[slot];
-    if(slot_node = NULL)
+    if(slot_node == NULL)
         hashtable->slots[slot] = hashnode;
     else{
         while(slot_node->next != NULL)
@@ -51,7 +51,7 @@ ll get(HashTable *hashtable, ll key){
     while(node != NULL && node->key != key){
         node = node->next;
     }
-    if(node = NULL)
+    if(node == NULL)
         return -1;
     return node->data;
 }
