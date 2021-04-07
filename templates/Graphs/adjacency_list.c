@@ -1,26 +1,26 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct Node{
+typedef struct GraphNode{
     int vertex;
-    struct Node *next;
-}Node;
+    struct GraphNode *next;
+}GraphNode;
 
 typedef struct Graph{
     int V, E;
-    Node **adjList;
+    GraphNode **adjList;
 }Graph;
 
-Node *createNode(int v){
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->vertex = v;
-    newNode->next = NULL;
-    return newNode;
+GraphNode *createGraphNode(int v){
+    GraphNode *newGraphNode = (GraphNode *)malloc(sizeof(GraphNode));
+    newGraphNode->vertex = v;
+    newGraphNode->next = NULL;
+    return newGraphNode;
 }
 
-Graph *createGraph(int V, int E){
+Graph *initGraph(int V, int E){
     Graph *G = (Graph *)malloc(sizeof(Graph));
-    G->adjList = (Node **)malloc(sizeof(Node *) * V);
+    G->adjList = (GraphNode **)malloc(sizeof(GraphNode *) * V);
     G->V = V;
     G->E = E;
 
@@ -31,14 +31,14 @@ Graph *createGraph(int V, int E){
 }
 
 void addEdge(Graph *G, int u, int v){
-    Node *newNode = createNode(v);
-    newNode->next = G->adjList[u];
-    G->adjList[u] = newNode;
+    GraphNode *newGraphNode = createGraphNode(v);
+    newGraphNode->next = G->adjList[u];
+    G->adjList[u] = newGraphNode;
 
     // Undirected graphs
-    newNode = createNode(u);
-    newNode->next = G->adjList[v];
-    G->adjList[v] = newNode;
+    newGraphNode = createGraphNode(u);
+    newGraphNode->next = G->adjList[v];
+    G->adjList[v] = newGraphNode;
 }
 
 int main(){
