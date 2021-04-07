@@ -92,9 +92,9 @@ void decreaseKey(Heap *h, int elmnt, int priority){
 
     while(h->arr[i]->priority < h->arr[(i - 1) / 2]->priority){
         h->pos[h->arr[i]->elmnt] = (i - 1) / 2;
-        h->pos[h->arr[parent(i)]->elmnt] = i;
+        h->pos[h->arr[(i - 1) / 2]->elmnt] = i;
 
-        swap(&h->arr[i], &h->arr[(i - 1) / 2]);
+        swapHeapNodes(&h->arr[i], &h->arr[(i - 1) / 2]);
         i = (i - 1) / 2;
     }
 }
