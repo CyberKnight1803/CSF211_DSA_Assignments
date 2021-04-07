@@ -30,15 +30,15 @@ void qSort(int *a, int L, int H){
 }
 
 typedef struct Node{
-    int data;
+    int key;
     struct Node *left;
     struct Node *right;
-    //struct Node *parent;
+    struct Node *parent;
 }Node;
 
-Node *createNode(int data){
+Node *createNode(int key){
     Node *node = (Node *)malloc(sizeof(Node));
-    node->data = data;
+    node->key = key;
     node->left = NULL;
     node->right = NULL;
     return node;
@@ -48,7 +48,7 @@ void inorderWalk(Node *root){
     if(root == NULL)
         return;
     inorderWalk(root->left);
-    printf("%d ", root->data);
+    printf("%d ", root->key);
     inorderWalk(root->right);
 }
 
@@ -58,7 +58,7 @@ void inorderTraversal(Node *root, int inorder[]){
         return;
     
     inorderTraversal(root->left, inorder);
-    inorder[i++] = root->data;
+    inorder[i++] = root->key;
     inorderTraversal(root->right, inorder);
 }
 
@@ -66,7 +66,7 @@ void formBST(int inorder[], Node *root, int *idx){
     if(root == NULL)
         return;
     formBST(inorder, root->left, idx);
-    root->data = inorder[(*idx)++];
+    root->key = inorder[(*idx)++];
     formBST(inorder, root->right, idx);
 }
 
@@ -79,7 +79,12 @@ void buildBST(Node *nodes[], int n){
 }
 
 Node *treeSearch(Node *root, int t);
-Node *getMax(Node*);
+Node *getMax(Node *root);
+Node *getMin(Node *root);
+Node *successor(Node *node);
+void insert(Node **root, int key);
+void transplant(Node **root, Node *u, Node *v);
+void delete(Node **root, Node *z);
 
 int main(){
     int n;
@@ -87,9 +92,9 @@ int main(){
 
     Node *nodes[n];
     for(int i = 0; i < n; ++i){
-        int data;
-        scanf("%d", &data);
-        nodes[i] = createNode(data);
+        int key;
+        scanf("%d", &key);
+        nodes[i] = createNode(key);
     }
 
     for(int i = 0; i < n - 1; ++i){
@@ -98,11 +103,14 @@ int main(){
         scanf("%d %d %c", &x, &y, &type);
         if(type == 'L'){
             nodes[x]->left = nodes[y];
+            nodes[y]->parent = nodes[x];
         }
         else{
             nodes[x]->right = nodes[y];
+            nodes[y]->parent = nodes[x];
         }
     }
+
     inorderWalk(nodes[0]);
     printf("\n");
     buildBST(nodes, n);
@@ -110,8 +118,8 @@ int main(){
 }
 
 Node *treeSearch(Node *node, int t){
-    while(node != NULL && node->data != t){
-        if(t < node->data)
+    while(node != NULL && node->key != t){
+        if(t < node->key)
             node = node->left;
         else
             node = node->right;
@@ -131,3 +139,70 @@ Node *getMin(Node *node){
     return node;
 }
 
+Node *successor(Node *node){
+    if(node->right != NULL)
+        return getMin(node->right);
+    
+    Node *par = node->parent;
+    while(par != NULL && node == par->right){
+        node = par;
+        par = par->parent;
+    }
+    return par;
+}
+
+void insert(Node **root, int key){
+    Node *y = NULL;
+    Node *x = *root;
+    while(x != NULL){
+        y = x;
+        if(key < x->key)
+            x = x->left;
+        else 
+            x = x->right;
+    }
+    Node *z = createNode(key);
+    z->parent = y;
+    if(y == NULL)
+        *root = z;
+
+    else if(z->key < y->key)
+        y->left = z;
+    else 
+        y->right = z;
+}
+
+void transplant(Node **root, Node *u, Node *v){
+    if(u->parent == NULL)
+        *root = v;
+    
+    else if(u == u->parent->left)
+        u->parent->left = v;
+    
+    else 
+        u->parent->right = v;
+
+    if(v != NULL)
+        v->parent = u->parent;
+}
+
+void delete(Node **root, Node *z){
+    Node *y;
+    if(z->left == NULL)
+        transplant(root, z, z->right);
+
+    else if(z->right == NULL)
+        transplant(root, z, z->left);
+    
+    else{
+        y = getMin(z->right);
+        if(y->parent != z){
+            transplant(root, y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+        }
+        transplant(root, z, y);
+        y->left = z->left;
+        y->left->parent = y;
+    }        
+}
