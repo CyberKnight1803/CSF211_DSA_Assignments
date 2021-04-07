@@ -39,6 +39,7 @@ typedef struct Node{
 Node *createNode(int key){
     Node *node = (Node *)malloc(sizeof(Node));
     node->key = key;
+    node->parent = NULL;
     node->left = NULL;
     node->right = NULL;
     return node;
