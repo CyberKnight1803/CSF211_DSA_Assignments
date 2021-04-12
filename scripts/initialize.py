@@ -2,7 +2,7 @@
 import os
 
 # Initialize variables
-assignment = 9 # Assignment number
+assignment = 10 # Assignment number
 dir = 'a' + str(assignment)
 os.makedirs(dir)
 solutions = dir + '/solutions/'
@@ -12,4 +12,3 @@ questions = 'abcdefghij'
 
 for q in questions:
     open(solutions + q + '.c', 'a').close()
-

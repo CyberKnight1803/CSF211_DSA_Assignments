@@ -12,3 +12,6 @@ a.out
 # Temporary bases -
 snippets/
 templates/practice
+
+# Test cases 
+**/.cph
