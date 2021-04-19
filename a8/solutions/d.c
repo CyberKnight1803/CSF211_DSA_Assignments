@@ -5,27 +5,119 @@
 int max(int a, int b){return (a > b) ? a : b;}
 
 struct Node{
-    int data;
+    int key;
     struct Node *left;
     struct Node *right;
 };
 typedef struct Node Node;
 
-Node *createNode(int data){
+Node *createNode(int key){
     Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
+    newNode->key = key;
     newNode->left = NULL;
     newNode->right = NULL;
     return newNode;
 }
 
-Node *linearSearch(Node *nodes[], int n, int t){
-    for(int i = 0; i < n; ++i){
-        if(nodes[i]->data == t)
-            return nodes[i];
+void deleteSubTree(Node *node){
+    if(!node) return;
+    deleteSubTree(node->left);
+    deleteSubTree(node->right);
+    free(node);
+}
+
+void deleteNode(int key, Node* root) {
+    if (root) {
+        Node* left = root->left;
+        Node* right = root->right;
+        if (left) {
+            if (left->key == key) {
+                deleteSubTree(left);
+                root->left = NULL;
+                return;
+            }
+        }
+        if (right) {
+            if (right->key == key){
+                deleteSubTree(right);
+                root->right = NULL;
+                return;
+            }
+        }
+        deleteNode(key, root->left);
+        deleteNode(key, root->right);
     }
+    return;
+}
+
+Node* findParent(int key, Node* root, int* dir) {
+    if (root) {
+        Node* left = root->left;
+        Node* right = root->right;
+
+        if (left) {
+            if (left->key == key) {
+                *dir = 0;
+                return root;
+            }
+        }
+
+        if (right) {
+            if (right->key == key) {
+                *dir = 1;
+                return root;
+            }
+        }
+
+        Node* parent;
+
+        parent = findParent(key, left, dir);
+        if (parent) return parent;
+
+        return findParent(key, right, dir);
+    }
+
     return NULL;
-}   
+}
+
+void swapNodes(int a, int b, Node* root) {
+    int dira = -1, dirb = -1;
+    Node* pa = findParent(a, root, &dira);
+    Node* pb = findParent(b, root, &dirb);
+    Node* temp;
+
+    if (dira < 0 || dirb < 0) return;
+
+    switch ((dirb << 1) | dira) {
+        case 0:
+            temp = pa->left;
+            pa->left = pb->left;
+            pb->left = temp;
+            break;
+
+        case 1:
+            temp = pa->right;
+            pa->right = pb->left;
+            pb->left = temp;
+            break;
+
+        case 2: 
+            temp = pa->left;
+            pa->left = pb->right;
+            pb->right = temp;
+            break;
+
+        case 3: 
+            temp = pa->right;
+            pa->right = pb->right;
+            pb->right = temp;
+            break;
+
+        default:
+            break;
+    }
+}
+
 
 int height(Node *root){
     if(root == NULL)
@@ -53,9 +145,9 @@ int main(){
 
     Node *nodes[n];
     for(int i = 0; i < n; ++i){
-        int data;
-        scanf("%d", &data);
-        nodes[i] = createNode(data);
+        int key;
+        scanf("%d", &key);
+        nodes[i] = createNode(key);
     }
     for(int i = 0; i < n - 1; ++i){
         int x, y;
@@ -74,18 +166,13 @@ int main(){
         if(strcmp(command, "DELETE") == 0){
             int a;
             scanf("%d", &a);
-            Node *node = linearSearch(nodes, n, a);
-            node = NULL;
+            deleteNode(a, nodes[0]);
         }
         else{
             int a, b;
             scanf("%d %d", &a, &b);
-            Node *A = linearSearch(nodes, n, a);
-            Node *B = linearSearch(nodes, n, b);
-            Node *t = A;
-            A = B;
-            B = t;
+            swapNodes(a, b, nodes[0]);
         }
     }
-    printf("%d", diameter(nodes[0]));
+    printf("%d", diameter(nodes[0]) - 1);
 }
