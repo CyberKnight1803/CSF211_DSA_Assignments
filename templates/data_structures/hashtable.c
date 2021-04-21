@@ -35,13 +35,17 @@ void insert(HashTable *hashtable, ll key, ll data){
 
     ll slot = hash(key);
     HashNode *slot_node = hashtable->slots[slot];
-    if(slot_node == NULL)
+    if(slot_node == NULL){
         hashtable->slots[slot] = hashnode;
-    else{
-        while(slot_node->next != NULL)
-            slot_node = slot_node->next;
-        slot_node->next = hashnode;
+        return;
     }
+    if(slot_node->key == key){
+        slot_node->data = data;
+        return;
+    }
+    while(slot_node->next != NULL)
+        slot_node = slot_node->next;
+    slot_node->next = hashnode;
 }
 
 ll get(HashTable *hashtable, ll key){
