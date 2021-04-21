@@ -99,6 +99,22 @@ void decreaseKey(Heap *h, int elmnt, int priority){
     }
 }
 
+void insertMinHeap(Heap *h, int elmnt, int priority){
+    if(h->cSize == 0){
+        HeapNode *node = createHeapNode(elmnt, priority);
+        h->arr[h->cSize++] = node;
+        h->pos[node->elmnt] = h->cSize - 1;
+        return;
+    }
+    HeapNode *node = createHeapNode(elmnt, priority);
+    h->arr[h->cSize++] = node;
+    h->pos[node->elmnt] = h->cSize - 1;
+
+    for(int i = (h->cSize / 2) - 1; i >= 0; ++i){
+        minHeapify(h, i);
+    }
+}
+
 // MAX HEAP OPERATIONS
 
 void maxHeapify(Heap *h, int i){
@@ -134,4 +150,20 @@ HeapNode *extractMax(Heap *h){
     h->cSize--;
     maxHeapify(h, 0);
     return root;
+}
+
+void insertMaxHeap(Heap *h, int elmnt, int priority){
+    if(h->cSize == 0){
+        HeapNode *node = createHeapNode(elmnt, priority);
+        h->arr[h->cSize++] = node;
+        h->pos[node->elmnt] = h->cSize - 1;
+        return;
+    }
+    HeapNode *node = createHeapNode(elmnt, priority);
+    h->arr[h->cSize++] = node;
+    h->pos[node->elmnt] = h->cSize - 1;
+
+    for(int i = (h->cSize / 2) - 1; i >= 0; ++i){
+        maxHeapify(h, i);
+    }
 }
