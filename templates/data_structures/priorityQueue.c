@@ -38,7 +38,7 @@ Heap *initHeap(int size){
     h->pos = (int *)malloc(sizeof(int) * size);
     h->heapSize = size;
     h->cSize = 0;
-    h->arr = (HeapNode *)malloc(sizeof(HeapNode));
+    h->arr = (HeapNode **)malloc(sizeof(HeapNode *) * size);
 
     return h;
 }
